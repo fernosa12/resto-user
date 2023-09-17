@@ -29,10 +29,10 @@ class AuthDatasource {
       LoginRequestModel model) async {
     final response = await http.post(
         Uri.parse('${Constants.baseUrl}/api/auth/local'),
-        body: model.toJson(),
-        headers: {'Content-Type': 'application/json'});
+        body: jsonEncode(model.toJson()),
+        headers: <String, String>{'Content-Type': 'application/json'});
     if (response.statusCode == 201) {
-      return Right(AuthResponseModel.fromJson(response.body));
+      return Right(AuthResponseModel.fromJson(jsonDecode(response.body)));
     } else {
       return const Left('Login gagal');
     }
